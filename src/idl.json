@@ -74,12 +74,20 @@
         "kind": "struct",
         "fields": [
           {
+            "name": "gifId",
+            "type": "u64"
+          },
+          {
             "name": "gifLink",
             "type": "string"
           },
           {
             "name": "userAddress",
             "type": "publicKey"
+          },
+          {
+            "name": "gifVotes",
+            "type": "u64"
           }
         ]
       }
