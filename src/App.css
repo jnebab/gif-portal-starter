@@ -69,11 +69,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
+  /* position: absolute; */
   width: 100%;
-  bottom: 0;
-  left: 0;
-  padding-bottom: 45px;
+  /* bottom: 0;
+  left: 0; */
+  /* padding-bottom: 45px; */
 }
 
 .twitter-logo {
@@ -111,12 +111,14 @@
 }
 
 .gif-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-  grid-gap: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
   justify-items: center;
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
+  max-width: 75%;
+  width: 100%;
+  margin-bottom: 40px;
 }
 
 .gif-grid .gif-item {
@@ -125,6 +127,8 @@
   position: relative;
   justify-self: center;
   align-self: center;
+  margin-right: 20px;
+  margin-bottom: 20px;
 }
 
 .gif-item img {

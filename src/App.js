@@ -26,6 +26,17 @@ const App = () => {
   const [walletAddress, setWalletAddress] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [gifList, setGifList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  function getProvider() {
+    const connection = new Connection(network, opts.preflightCommitment);
+    const provider = new Provider(
+      connection,
+      window.solana,
+      opts.preflightCommitment
+    );
+    return provider;
+  }
 
   const getGifList = useCallback(async () => {
     try {
@@ -36,8 +47,9 @@ const App = () => {
       );
       console.log("Got the account", account);
       setGifList(account.gifList);
+      setIsLoading(false);
     } catch (error) {
-      console.error(error);
+      console.error("getGifList", error);
       setGifList(null);
     }
   }, []);
@@ -57,21 +69,12 @@ const App = () => {
     return () => window.removeEventListener("load", onload);
   }, []);
 
-  function getProvider() {
-    const connection = new Connection(network, opts.preflightCommitment);
-    const provider = new Provider(
-      connection,
-      window.solana,
-      opts.preflightCommitment
-    );
-    return provider;
-  }
-
   async function createGifAccount() {
+    setIsLoading(true);
     try {
       const provider = getProvider();
       const program = new Program(idl, programId, provider);
-      console.log("ping");
+     
       await program.rpc.startStuffOff({
         accounts: {
           baseAccount: baseAccount.publicKey,
@@ -82,6 +85,7 @@ const App = () => {
       });
       await getGifList();
     } catch (error) {
+      setIsLoading(false);
       console.error("Error creating Gif account:", error);
     }
   }
@@ -123,8 +127,8 @@ const App = () => {
   }
 
   async function sendGif() {
+    setIsLoading(true);
     if (!!inputValue) {
-      // setGifList((old) => [inputValue, ...old]);
       setInputValue("");
       try {
         const provider = getProvider();
@@ -138,7 +142,10 @@ const App = () => {
         });
 
         await getGifList();
-      } catch (error) {}
+      } catch (error) {
+        setIsLoading(false);
+        console.error("sendGif", error);
+      }
     }
   }
 
@@ -179,11 +186,13 @@ const App = () => {
         <>
           {renderFormInput()}
           <div className="gif-grid">
-            {gifList.map((gif, index) => (
-              <div className="gif-item" key={index}>
-                <img src={gif.gifLink} alt={gif.gifLink} />
-              </div>
-            ))}
+            {gifList.map((gif, index) => {
+              return (
+                <div className="gif-item" key={index}>
+                  <img src={gif.gifLink} alt={gif.gifLink} />
+                </div>
+              );
+            })}
           </div>
         </>
       )}
@@ -197,10 +206,10 @@ const App = () => {
           {walletAddress ? (
             <div className="wallet">
               <p className="label">Wallet Address </p>
-              <p className="address">{`${walletAddress?.substr(0, 10)}...${walletAddress?.substr(
-                -10,
+              <p className="address">{`${walletAddress?.substr(
+                0,
                 10
-              )}`}</p>
+              )}...${walletAddress?.substr(-10, 10)}`}</p>
             </div>
           ) : null}
           <p className="header">🖼 GIF Portal</p>
@@ -215,17 +224,13 @@ const App = () => {
               Connect to Wallet
             </button>
           ) : null}
-          {walletAddress ? renderConnectedContainer() : null}
+          {walletAddress && isLoading ? (
+            <span style={{ color: "white" }}>
+              Processing transaction. Please wait...
+            </span>
+          ) : null}
         </div>
-        <div className="footer-container">
-          <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
-          <a
-            className="footer-text"
-            href={TWITTER_LINK}
-            target="_blank"
-            rel="noreferrer"
-          >{`built on @${TWITTER_HANDLE}`}</a>
-        </div>
+        {walletAddress ? renderConnectedContainer() : null}
       </div>
     </div>
   );
