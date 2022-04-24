@@ -87,6 +87,29 @@
   font-weight: bold;
 }
 
+.wallet {
+  width: 100%;
+  text-align: left;
+  font-size: 16px;
+  color: #f1f2f6;
+}
+
+.wallet p {
+  margin: 0;
+}
+
+.wallet .label {
+  font-weight: 600;
+ 
+  margin-bottom: 4px;
+}
+
+.wallet .address {
+  font-weight: 400;
+   opacity: 0.7;
+  /* font-size: 14px; */
+}
+
 .gif-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
@@ -111,7 +134,7 @@
   object-fit: cover;
 }
 
-.connected-container input[type='text'] {
+.connected-container input[type="text"] {
   display: inline-block;
   color: white;
   padding: 10px;
