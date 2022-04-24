@@ -1,99 +1,99 @@
 {
-  "version": "0.1.0",
-  "name": "mysolanaproject",
-  "instructions": [
-    {
-      "name": "startStuffOff",
-      "accounts": [
-        {
-          "name": "baseAccount",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "user",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "addGif",
-      "accounts": [
-        {
-          "name": "baseAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "user",
-          "isMut": false,
-          "isSigner": true
-        }
-      ],
-      "args": [
-        {
-          "name": "gifLink",
-          "type": "string"
-        }
-      ]
-    }
-  ],
-  "accounts": [
-    {
-      "name": "BaseAccount",
-      "type": {
-        "kind": "struct",
-        "fields": [
+    "version": "0.1.0",
+    "name": "mysolanaproject",
+    "instructions": [
+      {
+        "name": "startStuffOff",
+        "accounts": [
           {
-            "name": "totalGifs",
-            "type": "u64"
+            "name": "baseAccount",
+            "isMut": true,
+            "isSigner": true
           },
           {
-            "name": "gifList",
-            "type": {
-              "vec": {
-                "defined": "ItemStruct"
-              }
-            }
+            "name": "user",
+            "isMut": true,
+            "isSigner": true
+          },
+          {
+            "name": "systemProgram",
+            "isMut": false,
+            "isSigner": false
           }
-        ]
-      }
-    }
-  ],
-  "types": [
-    {
-      "name": "ItemStruct",
-      "type": {
-        "kind": "struct",
-        "fields": [
+        ],
+        "args": []
+      },
+      {
+        "name": "addGif",
+        "accounts": [
           {
-            "name": "gifId",
-            "type": "u64"
+            "name": "baseAccount",
+            "isMut": true,
+            "isSigner": false
           },
+          {
+            "name": "user",
+            "isMut": false,
+            "isSigner": true
+          }
+        ],
+        "args": [
           {
             "name": "gifLink",
             "type": "string"
-          },
-          {
-            "name": "userAddress",
-            "type": "publicKey"
-          },
-          {
-            "name": "gifVotes",
-            "type": "u64"
           }
         ]
       }
+    ],
+    "accounts": [
+      {
+        "name": "BaseAccount",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "totalGifs",
+              "type": "u64"
+            },
+            {
+              "name": "gifList",
+              "type": {
+                "vec": {
+                  "defined": "ItemStruct"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "types": [
+      {
+        "name": "ItemStruct",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "gifId",
+              "type": "u64"
+            },
+            {
+              "name": "gifLink",
+              "type": "string"
+            },
+            {
+              "name": "userAddress",
+              "type": "publicKey"
+            },
+            {
+              "name": "gifVotes",
+              "type": "u64"
+            }
+          ]
+        }
+      }
+    ],
+    "metadata": {
+      "address": "caMbQPAawZ5L95sSy8Xbkk4ACBSdXnxei7YUx9jH81d"
     }
-  ],
-  "metadata": {
-    "address": "caMbQPAawZ5L95sSy8Xbkk4ACBSdXnxei7YUx9jH81d"
   }
-}
